@@ -1,9 +1,9 @@
 # Open *that* file
-## How to be explicit with filenames while still being implicit
+## How to be explicit with filepaths while still being portable
 
 ---
 
-Maybe you've been here before; you are coding up a small script that needs to open a file, read the contents, and take some actions.  You put your program (`reader.py`) in the same directory as the file (`source.txt`) and hit `Run` in your editor of choice...
+Maybe you've been here before; you are coding up a small script that needs to open a file, read the contents, and take some actions.  You put your program (`reader.py`) in the same directory as the file (`source.txt`) and code up the following:
 
 ```py
 with open("source.txt", "r"): as infile:
@@ -11,6 +11,8 @@ with open("source.txt", "r"): as infile:
 
 print(infile)
 ```
+
+Here you tell Python to `open` the file `source.txt` and you don't give any type of filepath to the file because it's right there, in the same place as your program `reader.py`.  So you hit `Run` in your editor of choice and...
 
 ```py
 Traceback (most recent call last):
@@ -59,19 +61,19 @@ We import `pathlib` which is a great standard library for working with filepaths
 
 The second print is telling us where the `reader.py` is. `__file__` is a special value set by Python which holds the location of the file.
 
-Notice our paths here do not match! Python isn't "working" where our file is located.
+Notice our paths here do not match! Python isn't "working" where our file is located. We can think of that current working directory as a "You are here" arrow on a map of our file system.  That's where the interpreter is and, unless told otherwise, where the interpreter starts to look for files.
 
-This is a common issue for anyone that uses the built-in terminal of their editors to run the code.  The editor runs the code but executes (or calls) the interpreter from an unexpected working directory.  When python then runs the `open` function, the interpreter isn't looking where we expect.  Instead of looking at where the `.py` is, the interpreter uses the directory it was launched from.
+This is a common issue for anyone that uses the built-in terminal of their editors to run the code.  Unless told otherwise, many editors default to the user's home directory as the current working directory.
 
-That's worth saying again:
+So when we used `open("source.txt")...` we assumed the interpreter would look in the same path as the `reader.py` (at least, I did at first). Instead, python is looking for the file at `C:\Users\preocts\source.txt`.
 
 ---
-### The Python interpreter bases all relative file locations on the working directory, not the location of the `.py` file being run.
+### The Python interpreter's current working directory is set where the interpreter is run. This will effect where Python looks for files with the `open` statement (and imports too).
 ---
 
-So that's what is wrong with our program. Now we just need a solution.
+So that's what is wrong with our program. We're just looking for our file in the wrong place. Now, we just need a solution.
 
-A fast and easy solution would be to use an absolute path to open our file. Using `C:\Users\preocts\Documents\project\reader.py` would get the job done, but it's not very portable. The code wouldn't work on anyone else's computer or if we moved the files.
+A fast and easy solution would be to use an absolute path to open our file. Using `C:\Users\preocts\Documents\project\reader.py` would get the job done, but it's not very portable. The code wouldn't work on anyone else's computer or if we moved the files. Great for local-only projects.
 
 Another solution would be to configure the editor to use the `.\project` directory as the working directory. This can be a good habit for development but if you shared the project, the next dev might have the same issue. Again, portability is lost.
 
