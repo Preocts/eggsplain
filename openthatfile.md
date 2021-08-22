@@ -73,7 +73,7 @@ So when we used `open("source.txt")...` we assumed the interpreter would look in
 
 So that's what is wrong with our program. We're just looking for our file in the wrong place. Now, we just need a solution.
 
-A fast and easy solution would be to use an absolute path to open our file. Using `C:\Users\preocts\Documents\project\reader.py` would get the job done, but it's not very portable. The code wouldn't work on anyone else's computer or if we moved the files. Great for local-only projects.
+A fast and easy solution would be to use an absolute path to open our file. Using `C:\Users\preocts\Documents\project\source.txt` would get the job done, but it's not very portable. The code wouldn't work on anyone else's computer or if we moved the files. Great for local-only projects.
 
 Another solution would be to configure the editor to use the `.\project` directory as the working directory. This can be a good habit for development but if you shared the project, the next dev might have the same issue. Again, portability is lost.
 
