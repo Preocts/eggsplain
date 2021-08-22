@@ -12,3 +12,9 @@ something that is helpful.
 
 See something, say something. If you spot a mistake, want to add clarification,
 or add details please feel free to open an issue or pull-request.
+
+---
+
+## Table of Contents
+
+1. [Open *that* File](openthatfile.md) - A brief example of how the working directory for Python can impact opening a file.
