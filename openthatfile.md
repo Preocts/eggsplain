@@ -55,9 +55,13 @@ Traceback (most recent call last):
 FileNotFoundError: [Errno 2] No such file or directory: 'source.txt'
 ```
 
-Same error but check out the difference in directory paths here. Now, `pathlib.Path().cwd()` is printing our current working directory. This is where the Python interpreter was run. the `pathlib.Path(__file__)` is printing the full location of our `reader.py` file.  Python isn't "working" where our file is located.
+We import `pathlib` which is a great standard library for working with filepaths. The first print is showing us what is called the "current working directory".  This is where the Python interpreter was run.
 
-This is a common issue for those programmers that use the built-in terminals of their editors to run the code.  The editor runs the code but has executed the it from a different working directory.  When python runs the `open` function, the interpreter isn't using the location of the module.  Instead, the interpreter uses the directory it was launched from.
+The second print is telling us where the `reader.py` is. `__file__` is a special value set by Python which holds the location of the file.
+
+Notice our paths here do not match! Python isn't "working" where our file is located.
+
+This is a common issue for anyone that uses the built-in terminal of their editors to run the code.  The editor runs the code but executes (or calls) the interpreter from an unexpected working directory.  When python then runs the `open` function, the interpreter isn't looking where we expect.  Instead of looking at where the `.py` is, the interpreter uses the directory it was launched from.
 
 That's worth saying again:
 
@@ -65,21 +69,26 @@ That's worth saying again:
 ### The Python interpreter bases all relative file locations on the working directory, not the location of the `.py` file being run.
 ---
 
-We know what is wrong. Now we just need a solution.
+So that's what is wrong with our program. Now we just need a solution.
 
-One such solution would be to use an absolute path to open our file. Using `C:\Users\preocts\Documents\project\reader.py` would get the job done, but it's not very portable. The code wouldn't work on anyone else's computer or if we moved the files.
+A fast and easy solution would be to use an absolute path to open our file. Using `C:\Users\preocts\Documents\project\reader.py` would get the job done, but it's not very portable. The code wouldn't work on anyone else's computer or if we moved the files.
 
 Another solution would be to configure the editor to use the `.\project` directory as the working directory. This can be a good habit for development but if you shared the project, the next dev might have the same issue. Again, portability is lost.
 
-Instead, we can leverage that special `__file__` dunder value and open `source.txt` *relative to the location of* `reader.py`. Meaning that so long as we know where `source.txt` is in relation to `reader.py` we will be able to find and open it. To do this, we'll use `pathlib`.
+Instead, we can leverage that special `__file__` value and open `source.txt` *relative to the location of* `reader.py`. Meaning that so long as we know where `source.txt` is in relation to `reader.py` we will be able to find and open it. To do this, we'll, again, use `pathlib`.
 
 ```py
 filepath = pathlib.Path(__file__).parent / "source.txt"
 ```
 
-This is using some of the magic of `pathlib`. The `parent` gives us everything of the path except the last piece (`C:\Users\preocts\Documents\project`). The `/` is used by `pathlib` to let us quickly create `Path` objects. Together we get `C:\Users\preocts\Documents\project\source.txt` which is the absolute path of our target file.
+This looks complex if you aren't familiar with `pathlib` but it is actually very straight-forward.
 
-The neat thing is that if we move `reader.py` the code will still work so long as `source.txt` is with it.
+- `pathlib.Path(__file__)` gives us the full path to our file: `C:\Users\preocts\Documents\project\reader.py`
+- `.parent` removes the right-most piece of the path, leaving us with just a location: `C:\Users\preocts\Documents\project`
+- `/ "source.txt` is how we add to a `Path` object.
+- Together we get `C:\Users\preocts\Documents\project\source.txt` which is the absolute path of our target file.
+
+The neat thing is that if we move `reader.py` the code will still work so long as we move `source.txt` with it.
 
 Our end code looks like this:
 
