@@ -7,9 +7,9 @@ Maybe you've been here before; you are coding up a small script that needs to op
 
 ```py
 with open("source.txt", "r"): as infile:
-    file_contexts = infile.read()
+    file_contents = infile.read()
 
-print(infile)
+print(file_contents)
 ```
 
 Here you tell Python to `open` the file `source.txt` and you don't give any type of filepath to the file because it's right there, in the same place as your program `reader.py`.  So you hit `Run` in your editor of choice and...
@@ -43,9 +43,9 @@ print(pathlib.Path().cwd())
 print(pathlib.Path(__file__))
 
 with open("source.txt", "r"): as infile:
-    file_contexts = infile.read()
+    file_contents = infile.read()
 
-print(infile)
+print(contents)
 ```
 
 ```py
@@ -100,9 +100,9 @@ import pathlib
 filepath = pathlib.Path(__file__).parent / "source.txt"
 
 with open(filepath, "r"): as infile:
-    file_contexts = infile.read()
+    file_contents = infile.read()
 
-print(infile)
+print(file_contents)
 ```
 
 With an expected output of our file without needing to worry about where the Python interpreter is running (working directory).
