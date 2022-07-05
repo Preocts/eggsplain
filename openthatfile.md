@@ -68,7 +68,7 @@ This is a common issue for anyone that uses the built-in terminal of their edito
 So when we used `open("source.txt")...` we assumed the interpreter would look in the same path as the `reader.py` (at least, I did at first). Instead, python is looking for the file at `C:\Users\preocts\source.txt`.
 
 ---
-### The Python interpreter's current working directory is set where the interpreter is run. This will effect where Python looks for files with the `open` statement (and imports too).
+### The Python interpreter's current working directory is set where the interpreter is run. This will affect where Python looks for files with the `open` statement (and imports too).
 ---
 
 So that's what is wrong with our program. We're just looking for our file in the wrong place. Now, we just need a solution.
