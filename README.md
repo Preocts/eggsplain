@@ -18,3 +18,4 @@ or add details please feel free to open an issue or pull-request.
 ## Table of Contents
 
 1. [Open *that* File](openthatfile.md) - A brief example of how the working directory for Python can impact opening a file.
+1. [deadsnakes](deadsnakes.md) - Install Python versions new and old on Ubuntu.
